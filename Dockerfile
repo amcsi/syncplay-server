@@ -16,5 +16,11 @@ RUN git clone https://github.com/Syncplay/syncplay -b v1.6.3 /app/syncplay
 
 EXPOSE 8999
 COPY ./entrypoint.sh /entrypoint.sh
+
+# Run as non-root user                                                                                                  
+RUN addgroup -g 800 -S syncplay && \
+    adduser -u 800 -S syncplay -G syncplay
+USER syncplay
+
 WORKDIR /app/syncplay
 ENTRYPOINT ["/entrypoint.sh"]
