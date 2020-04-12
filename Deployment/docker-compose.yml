@@ -10,3 +10,6 @@ services:
       - "8999:8999"
     environment:
      - PASSWORD=<You should add your own password here>
+     - TLS=/certs
+    volumes:
+     - ./<path to tls certs>:/certs

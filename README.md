@@ -13,6 +13,8 @@ docker create \
 --net=host \
 -e PASSWORD=<PASSWORD> \
 -e PORT=<PORT> \
+-e TLS=/certs \
+-v <certs>:/certs \
 ninetaillabs/syncplay-server
 ```
 
