@@ -1,15 +1,23 @@
 FROM python:3.7-alpine
 
-RUN  apk add --update --progress \
+RUN  apk add --no-cache --update --progress \
         musl \
         build-base \
         bash \
-        git
+        git \
+        libressl-dev \
+        musl-dev \
+        libffi-dev
 
 #ENV PYTHON_PIP_VERSION 8.1.0
-RUN pip install -q --no-cache-dir --upgrade pip
-
-RUN pip install twisted
+RUN pip install -q --no-cache-dir --upgrade pip && \
+    pip install \
+        twisted \
+        certifi \
+        pyopenssl \
+        service_identity \
+        idna \
+        cryptography
 
 RUN mkdir /app/syncplay -p
 RUN git clone https://github.com/Syncplay/syncplay -b v1.6.4a /app/syncplay

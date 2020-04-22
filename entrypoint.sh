@@ -23,4 +23,9 @@ if [ -n "$PASSWORD" ]; then
   args="$args --password=$PASSWORD"
 fi
 
+if [ -n "$TLS" ]; then
+  args="$args --tls=$TLS"
+fi
+
+
 exec $(eval "./syncplayServer.py $args $@")
