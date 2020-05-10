@@ -27,7 +27,9 @@ COPY ./entrypoint.sh /entrypoint.sh
 
 # Run as non-root user                                                                                                  
 RUN addgroup -g 800 -S syncplay && \
-    adduser -u 800 -S syncplay -G syncplay
+    adduser -u 800 -S syncplay -G syncplay && \
+    chown -R syncplay:syncplay /app/syncplay
+
 USER syncplay
 
 WORKDIR /app/syncplay

@@ -14,9 +14,9 @@ if [ -n "$ISOLATE" ]; then
   args="$args --isolate-rooms"
 fi
 
-if [ -n "$MOTD"]; then
-  echo "$MOTD" >> /motd
-  args="$args --motd-file=/motd"
+if [ -n "$MOTD" ]; then
+  echo "$MOTD" >> /app/syncplay/motd
+  args="$args --motd-file=/app/syncplay/motd"
 fi
 
 if [ -n "$PASSWORD" ]; then
