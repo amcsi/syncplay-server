@@ -20,7 +20,7 @@ RUN pip install -q --no-cache-dir --upgrade pip && \
         cryptography
 
 RUN mkdir /app/syncplay -p
-RUN git clone https://github.com/Syncplay/syncplay -b v1.6.4a /app/syncplay
+RUN git clone https://github.com/Syncplay/syncplay -b v1.6.5 /app/syncplay
 
 EXPOSE 8999
 COPY ./entrypoint.sh /entrypoint.sh
