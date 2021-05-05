@@ -1,12 +1,10 @@
 FROM python:3.7-alpine
 
 RUN  apk add --no-cache --update --progress \
-        musl \
         build-base \
         bash \
         git \
         libressl-dev \
-        musl-dev \
         libffi-dev
 
 #ENV PYTHON_PIP_VERSION 8.1.0
