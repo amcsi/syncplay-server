@@ -4,7 +4,8 @@ RUN  apk add --no-cache --update --progress \
         build-base \
         bash \
         git \
-        libressl-dev \
+        cargo \
+        openssl-dev \
         libffi-dev
 
 #ENV PYTHON_PIP_VERSION 8.1.0
