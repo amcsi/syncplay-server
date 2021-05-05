@@ -2,7 +2,6 @@ FROM python:3.7-alpine
 
 RUN  apk add --no-cache --update --progress \
         build-base \
-        bash \
         git \
         cargo \
         openssl-dev \
