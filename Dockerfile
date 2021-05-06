@@ -22,14 +22,14 @@ COPY --from=build /wheels /wheels
 WORKDIR /wheels
 RUN pip install *.whl
 
-EXPOSE 8999
-COPY ./entrypoint.sh /entrypoint.sh
-
 # Run as non-root user                                                                                                  
 WORKDIR /app/syncplay
 RUN addgroup -g 800 -S syncplay && \
     adduser -u 800 -S syncplay -G syncplay && \
     chown -R syncplay:syncplay /app/syncplay
 
+COPY ./entrypoint.sh /entrypoint.sh
+
+EXPOSE 8999
 USER syncplay
 ENTRYPOINT ["/entrypoint.sh"]
