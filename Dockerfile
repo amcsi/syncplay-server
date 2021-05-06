@@ -1,36 +1,35 @@
+FROM python:3.7-alpine as build
+
+RUN apk add --no-cache --progress \
+        build-base \
+        cargo \
+        git \
+        libffi-dev \
+        openssl-dev
+
+WORKDIR /wheels
+RUN pip install -U pip
+# Unless this environment variable is set, Syncplay's setup.py tries to grab GUI dependencies
+RUN SNAPCRAFT_PART_BUILD=1 pip wheel git+https://github.com/syncplay/syncplay.git@v1.6.7#egg=syncplay
+
 FROM python:3.7-alpine
 
 RUN  apk add --no-cache --update --progress \
-        musl \
-        build-base \
-        bash \
-        git \
-        libressl-dev \
-        musl-dev \
-        libffi-dev
+        openssl \
+        libffi
 
-#ENV PYTHON_PIP_VERSION 8.1.0
-RUN pip install -q --no-cache-dir --upgrade pip && \
-    pip install \
-        twisted \
-        certifi \
-        pyopenssl \
-        service_identity \
-        idna \
-        cryptography
-
-RUN mkdir /app/syncplay -p
-RUN git clone https://github.com/Syncplay/syncplay -b v1.6.7 /app/syncplay
-
-EXPOSE 8999
-COPY ./entrypoint.sh /entrypoint.sh
+COPY --from=build /wheels /wheels
+WORKDIR /wheels
+RUN pip install *.whl
 
 # Run as non-root user                                                                                                  
+WORKDIR /app/syncplay
 RUN addgroup -g 800 -S syncplay && \
     adduser -u 800 -S syncplay -G syncplay && \
     chown -R syncplay:syncplay /app/syncplay
 
-USER syncplay
+COPY ./entrypoint.sh /entrypoint.sh
 
-WORKDIR /app/syncplay
+EXPOSE 8999
+USER syncplay
 ENTRYPOINT ["/entrypoint.sh"]
