@@ -28,4 +28,4 @@ if [ -n "$TLS" ]; then
 fi
 
 
-exec $(eval "./syncplayServer.py $args $@")
+PYTHONUNBUFFERED=1 exec syncplay-server $args $@
