@@ -1,21 +1,27 @@
+FROM python:3.7-alpine as build
+
+RUN apk add --no-cache --progress \
+        build-base \
+        cargo \
+        curl \
+        libffi-dev \
+        openssl-dev
+
+WORKDIR /wheels
+RUN pip install -U pip
+RUN curl -L https://raw.githubusercontent.com/Syncplay/syncplay/v1.6.7/requirements.txt | \
+    pip wheel -r /dev/stdin
+
 FROM python:3.7-alpine
 
 RUN  apk add --no-cache --update --progress \
-        build-base \
         git \
-        cargo \
-        openssl-dev \
-        libffi-dev
+        openssl \
+        libffi
 
-#ENV PYTHON_PIP_VERSION 8.1.0
-RUN pip install -q --no-cache-dir --upgrade pip && \
-    pip install \
-        twisted \
-        certifi \
-        pyopenssl \
-        service_identity \
-        idna \
-        cryptography
+COPY --from=build /wheels /wheels
+WORKDIR /wheels
+RUN pip install *.whl
 
 RUN mkdir /app/syncplay -p
 RUN git clone https://github.com/Syncplay/syncplay -b v1.6.7 /app/syncplay
