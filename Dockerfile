@@ -10,7 +10,7 @@ RUN apk add --no-cache --progress \
 WORKDIR /wheels
 RUN pip install -U pip
 # Unless this environment variable is set, Syncplay's setup.py tries to grab GUI dependencies
-RUN SNAPCRAFT_PART_BUILD=1 pip wheel git+https://github.com/syncplay/syncplay.git@v1.6.7#egg=syncplay
+RUN SNAPCRAFT_PART_BUILD=1 pip wheel git+https://github.com/syncplay/syncplay.git@v1.6.8#egg=syncplay
 
 FROM python:3.7-alpine
 
