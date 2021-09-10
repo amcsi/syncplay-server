@@ -3,14 +3,19 @@ Dockerfile for a syncplay server
 
 ![syncplay](https://raw.githubusercontent.com/Syncplay/syncplay/master/syncplay/resources/hicolor/128x128/apps/syncplay.png) 
 
-[Syncplay](http://syncplay.pl/)
+[Syncplay](http://syncplay.pl/)  
+[[Guide]Running a server](https://syncplay.pl/guide/server/)
 
 ## Usage
+
+If you want to use TLS, you have to set the hostname of the container to a domain that is covered in your certificate
 
 ```
 docker create \
 --name=syncplay \
 --net=host \
+--hostname=syncplay.example.com
+--user 800:800
 -e PASSWORD=<PASSWORD> \
 -e PORT=<PORT> \
 -e TLS=/certs \
