@@ -7,10 +7,14 @@ RUN apk add --no-cache --progress \
         libffi-dev \
         openssl-dev
 
+WORKDIR /source
+RUN git clone --depth=1 --branch=v1.6.8 https://github.com/syncplay/syncplay.git ./ && \
+    echo "" > requirements_gui.txt
+
 WORKDIR /wheels
 RUN pip install -U pip
 # Unless this environment variable is set, Syncplay's setup.py tries to grab GUI dependencies
-RUN SNAPCRAFT_PART_BUILD=1 pip wheel git+https://github.com/syncplay/syncplay.git@v1.6.8#egg=syncplay
+RUN SNAPCRAFT_PART_BUILD=1 pip wheel file:///source#egg=syncplay
 
 FROM python:3.7-alpine
 
