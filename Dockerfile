@@ -26,10 +26,13 @@ COPY --from=build /wheels /wheels
 WORKDIR /wheels
 RUN pip install *.whl
 
-# Run as non-root user                                                                                                  
+# Run as non-root user
+ARG USER_UID=800
+ARG USER_GID=800
+
 WORKDIR /app/syncplay
-RUN addgroup -g 800 -S syncplay && \
-    adduser -u 800 -S syncplay -G syncplay && \
+RUN addgroup -g "${USER_GID}" -S syncplay && \
+    adduser -u "${USER_UID}" -S syncplay -G syncplay && \
     chown -R syncplay:syncplay /app/syncplay
 
 COPY ./entrypoint.sh /entrypoint.sh
