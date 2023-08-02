@@ -20,7 +20,7 @@ docker create \
 -e PORT=<PORT> \
 -e TLS=/certs \
 -v <certs>:/certs \
-ninetaillabs/syncplay-server
+amcsi/syncplay-server
 ```
 
 ## Docker Deploy
